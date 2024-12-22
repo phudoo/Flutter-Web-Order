@@ -1,109 +1,74 @@
+1. Chuẩn Bị Môi Trường
+Frontend:
+Cài đặt Flutter SDK.
+Sử dụng Visual Studio Code hoặc Android Studio.
+Backend:
+Cài đặt PHP (phiên bản 8.x), Composer, và Laravel.
+Sử dụng cơ sở dữ liệu MySQL hoặc SQL Server.
+2. Xây Dựng API với Laravel
+Cấu trúc bảng cơ sở dữ liệu:
+Users: Lưu thông tin người dùng.
+id, name, email, password, role (Admin/Khách hàng)
+Foods: Lưu thông tin món ăn.
+id, name, description, price, image
+Orders: Lưu thông tin đơn hàng.
+id, user_id, total_price, status, created_at
+Order_Items: Chi tiết món ăn trong đơn hàng.
+id, order_id, food_id, quantity
+Reviews: Đánh giá món ăn.
+id, food_id, user_id, rating, comment
+API chính cần triển khai:
+User APIs:
 
+Đăng ký: POST /api/register
+Đăng nhập: POST /api/login
+Xem và cập nhật tài khoản: GET/PUT /api/user
+Food APIs:
 
-### 1. **Chuẩn Bị Môi Trường**
-#### Frontend:
-- Cài đặt **Flutter SDK**.
-- Sử dụng **Visual Studio Code** hoặc **Android Studio**.
+Danh sách món ăn: GET /api/foods
+Thêm, sửa, xóa món ăn (Admin): POST/PUT/DELETE /api/foods
+Order APIs:
 
-#### Backend:
-- Cài đặt **PHP (phiên bản 8.x)**, **Composer**, và **Laravel**.
-- Sử dụng cơ sở dữ liệu **MySQL** hoặc **SQL Server**.
+Đặt món: POST /api/orders
+Xem đơn hàng: GET /api/orders
+Lịch sử đơn hàng: GET /api/orders/history
+Review APIs:
 
----
+Đánh giá món ăn: POST /api/reviews
+Xem đánh giá món ăn: GET /api/foods/{id}/reviews
+Admin APIs:
 
-### 2. **Xây Dựng API với Laravel**
+Quản lý tài khoản người dùng: GET/DELETE /api/users
+Tích hợp JWT cho xác thực:
+Cài đặt package: composer require tymon/jwt-auth
+Cấu hình và bảo vệ các route cần xác thực bằng middleware.
+3. Xây Dựng Giao Diện với Flutter
+Các màn hình cần thiết:
+Màn hình người dùng:
 
-#### **Cấu trúc bảng cơ sở dữ liệu**:
-- **Users**: Lưu thông tin người dùng.
-  - `id`, `name`, `email`, `password`, `role` (Admin/Khách hàng)
-  
-- **Foods**: Lưu thông tin món ăn.
-  - `id`, `name`, `description`, `price`, `image`
-  
-- **Orders**: Lưu thông tin đơn hàng.
-  - `id`, `user_id`, `total_price`, `status`, `created_at`
-  
-- **Order_Items**: Chi tiết món ăn trong đơn hàng.
-  - `id`, `order_id`, `food_id`, `quantity`
-  
-- **Reviews**: Đánh giá món ăn.
-  - `id`, `food_id`, `user_id`, `rating`, `comment`
+Đăng ký, Đăng nhập.
+Trang cá nhân (xem, chỉnh sửa tài khoản).
+Danh sách món ăn (với tìm kiếm).
+Chi tiết món ăn (kèm đánh giá và nút đặt hàng).
+Lịch sử đơn hàng.
+Đánh giá món ăn.
+Màn hình admin:
 
----
-
-#### **API chính cần triển khai**:
-
-- **User APIs**:
-  - Đăng ký: `POST /api/register`
-  - Đăng nhập: `POST /api/login`
-  - Xem và cập nhật tài khoản: `GET/PUT /api/user`
-
-- **Food APIs**:
-  - Danh sách món ăn: `GET /api/foods`
-  - Thêm, sửa, xóa món ăn (Admin): `POST/PUT/DELETE /api/foods`
-
-- **Order APIs**:
-  - Đặt món: `POST /api/orders`
-  - Xem đơn hàng: `GET /api/orders`
-  - Lịch sử đơn hàng: `GET /api/orders/history`
-
-- **Review APIs**:
-  - Đánh giá món ăn: `POST /api/reviews`
-  - Xem đánh giá món ăn: `GET /api/foods/{id}/reviews`
-
-- **Admin APIs**:
-  - Quản lý tài khoản người dùng: `GET/DELETE /api/users`
-
----
-
-#### **Tích hợp JWT cho xác thực**:
-- Cài đặt package: `composer require tymon/jwt-auth`
-- Cấu hình và bảo vệ các route cần xác thực bằng middleware.
-
----
-
-### 3. **Xây Dựng Giao Diện với Flutter**
-
-#### **Các màn hình cần thiết**:
-
-- **Màn hình người dùng**:
-  - Đăng ký, Đăng nhập.
-  - Trang cá nhân (xem, chỉnh sửa tài khoản).
-  - Danh sách món ăn (với tìm kiếm).
-  - Chi tiết món ăn (kèm đánh giá và nút đặt hàng).
-  - Lịch sử đơn hàng.
-  - Đánh giá món ăn.
-
-- **Màn hình admin**:
-  - Thêm, sửa, xóa món ăn.
-  - Quản lý đơn hàng.
-  - Quản lý tài khoản người dùng.
-
-#### **Tích hợp API**:
-- Dùng thư viện **http** hoặc **dio** để gọi API.
-- Lưu **token JWT** trong **SharedPreferences** để xác thực các request.
-
----
-
-### 4. **Tối Ưu Hóa**
-
-#### Frontend:
-- Dùng **provider** hoặc **bloc** để quản lý trạng thái.
-- Hiển thị ảnh món ăn bằng **CachedNetworkImage**.
-
-#### Backend:
-- Tối ưu **query** với **Eloquent Relationships**.
-- Sử dụng **pagination** cho danh sách lớn.
-
----
-
-### 5. **Triển Khai**
-
-#### Backend:
-- Deploy **Laravel** lên server hoặc dịch vụ như **Heroku**, **AWS**.
-
-#### Frontend:
-- Build ứng dụng **Flutter** để chạy trên **web**, **Android**, và **iOS**.
-
----
-
+Thêm, sửa, xóa món ăn.
+Quản lý đơn hàng.
+Quản lý tài khoản người dùng.
+Tích hợp API:
+Dùng thư viện http hoặc dio để gọi API.
+Lưu token JWT trong SharedPreferences để xác thực các request.
+4. Tối Ưu Hóa
+Frontend:
+Dùng provider hoặc bloc để quản lý trạng thái.
+Hiển thị ảnh món ăn bằng CachedNetworkImage.
+Backend:
+Tối ưu query với Eloquent Relationships.
+Sử dụng pagination cho danh sách lớn.
+5. Triển Khai
+Backend:
+Deploy Laravel lên server hoặc dịch vụ như Heroku, AWS.
+Frontend:
+Build ứng dụng Flutter để chạy trên web, Android, và iOS.
